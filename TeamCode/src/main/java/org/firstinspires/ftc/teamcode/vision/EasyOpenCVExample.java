@@ -55,6 +55,8 @@ public class EasyOpenCVExample extends LinearOpMode
 
         /*  If you are using a control hub with an external webcam, keep the below code */
 
+                    // TODO
+
 
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
