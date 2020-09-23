@@ -59,6 +59,7 @@ public class ultimategoalwebcampipeline extends LinearOpMode
     @Override
     public void runOpMode()
     {
+        // NOT FULLY DEBUGGED
         /*  If you are using a Rev Extension Hub with a robot controller phone, uncomment the below code.
          *  In addition to uncommenting you must replace all instances in code of "webcam" with "phoneCam"
          *  Currently set up for rear camera (see javadocs for other configurations:  https://javadoc.io/doc/org.openftc/easyopencv/latest/index.html)
