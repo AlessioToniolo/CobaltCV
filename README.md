@@ -24,7 +24,7 @@ To get started with using **CobaltCV**, you have two options:
 
 ### Adding OpenCV to your robot controller
 In order to use OpenCV, you must download this file and add it to your robot controller files, whether that would be a control hub or robot phone.
-**(libOpenCvNative.so)[https://github.com/AlessioToniolo/FTC-EOCV-Ultimate-Goal/blob/master/libOpenCvNative.so]**
+**https://github.com/AlessioToniolo/FTC-EOCV-Ultimate-Goal/blob/master/libOpenCvNative.so**
 
 ## Help
 For more in depth documentation and configurations, visit these two links:
