@@ -45,10 +45,6 @@ public class ultimategoalphonecampipeline extends LinearOpMode
     @Override
     public void runOpMode()
     {
-        /*  If you are using a Rev Extension Hub with a robot controller phone, uncomment the below code.
-         *  In addition to uncommenting you must replace all instances in code of "webcam" with "phoneCam"
-         *  Currently set up for rear camera (see javadocs for other configurations:  https://javadoc.io/doc/org.openftc/easyopencv/latest/index.html)
-         */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         pipeline = new SkystoneDeterminationPipeline();
