@@ -41,7 +41,6 @@ public class ultimategoalphonecampipeline extends LinearOpMode
 {
     OpenCvInternalCamera phoneCam;
     SkystoneDeterminationPipeline pipeline;
-
     @Override
     public void runOpMode()
     {
@@ -80,6 +79,7 @@ public class ultimategoalphonecampipeline extends LinearOpMode
 
     public static class SkystoneDeterminationPipeline extends OpenCvPipeline
     {
+
         /*
          * An enum to define the skystone position
          */

@@ -32,14 +32,9 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvWebcam;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
-import org.openftc.easyopencv.OpenCvWebcam;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import java.util.Locale;
 
 @TeleOp
 public class ultimategoalwebcampipeline extends LinearOpMode
@@ -53,8 +48,7 @@ public class ultimategoalwebcampipeline extends LinearOpMode
     */
 
     /*  If you are using a control hub with an external webcam, uncomment the below code */
-    private OpenCvCamera webcam;
-    SkystoneDeterminationPipeline pipeline;
+    OpenCvCamera webcam;
 
     @Override
     public void runOpMode()
@@ -73,12 +67,8 @@ public class ultimategoalwebcampipeline extends LinearOpMode
 
         /*  If you are using a control hub with an external webcam, do not comment the below code */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        // OpenCVWebcam instantiation not fully debugged
-        webcam = new OpenCvWebcam(hardwareMap.get(WebcamName.class, "Webcam"), cameraMonitorViewId);
-        pipeline = new SkystoneDeterminationPipeline();
-        webcam.setPipeline(pipeline);
-
-
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webcam.setPipeline(new SkystoneDeterminationPipeline());
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
         // out when the RC activity is in portrait. We do our actual image processing assuming
@@ -99,9 +89,23 @@ public class ultimategoalwebcampipeline extends LinearOpMode
 
         while (opModeIsActive())
         {
+            /*
+             * Send some stats to the telemetry
+             */
+            telemetry.addData("Frame Count", webcam.getFrameCount());
+            telemetry.addData("FPS", String.format("%.2f", webcam.getFps()));
+            telemetry.addData("Total frame time ms", webcam.getTotalFrameTimeMs());
+            telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
+            telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
+            telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
+            telemetry.update();
+
+            /* TODO create active webcam telemetry */
+            /*
             telemetry.addData("Analysis", pipeline.getAnalysis());
             telemetry.addData("Position", pipeline.position);
             telemetry.update();
+            */
 
             // Don't burn CPU cycles busy-looping in this sample
             sleep(50);
