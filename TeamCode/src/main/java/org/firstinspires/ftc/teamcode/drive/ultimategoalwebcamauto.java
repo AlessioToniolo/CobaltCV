@@ -1,6 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.drive;
 
-import org.firstinspires.ftc.teamcode.vision.EasyOpenCVExample;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.base;
+import org.firstinspires.ftc.teamcode.vision.ultimategoalwebcampipeline;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -12,55 +18,47 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
-
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 // FOR MECANUM DRIVETRAINS
 // RECOMMENDED USE FOR OPENCV AND NO OTHER EXTERNAL REPOSITORIES
 
 @Autonomous(name="16633: Auto Red Build Wall", group="16633")
 //@Disabled
-public class Auto_Red_Build_Wall_16633_State extends LinearOpMode {
+public class ultimategoalwebcamauto extends LinearOpMode {
 
     /* Declare OpMode members. */
-    MaristBaseRobot2019_Quad_14101 robot   = new MaristBaseRobot2019_Quad_14101();
+    base robot   = new base();
     private ElapsedTime runtime = new ElapsedTime();
 
     // Variables to control Speed
     double velocity = 0.5; // Default velocity
 
     // OpenCV Init
-    OpenCvInternalCamera phoneCam;
-    EasyOpenCVExample.SkystoneDeterminationPipeline pipeline;
+    private OpenCvCamera webcam;
+    ultimategoalwebcampipeline.SkystoneDeterminationPipeline pipeline;
 
     @Override
     public void runOpMode() {
         // Pipeline Init
-
-        /*  If you are using a Rev Extension Hub with a robot controller phone, keep the below code.
-         *  Currently set up for rear camera (see javadocs for other configurations:  https://javadoc.io/doc/org.openftc/easyopencv/latest/index.html)
-         */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        pipeline = new EasyOpenCVExample.SkystoneDeterminationPipeline();
-        phoneCam.setPipeline(pipeline);
-
-        /*  If you are using a control hub with an external webcam, keep the below code */
-        // TODO
+        // OpenCVWebcam instantiation not fully debugged
+        webcam = new OpenCvWebcam(hardwareMap.get(WebcamName.class, "Webcam"), cameraMonitorViewId);
+        pipeline = new ultimategoalwebcampipeline.SkystoneDeterminationPipeline();
+        webcam.setPipeline(pipeline);
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
         // out when the RC activity is in portrait. We do our actual image processing assuming
         // landscape orientation, though.
-        phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+        webcam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                phoneCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                // Make sure @width and @height fit in your webcam's resolution
+                webcam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
         });
 
@@ -125,7 +123,7 @@ public class Auto_Red_Build_Wall_16633_State extends LinearOpMode {
             int avg1;
 
             // Volatile since accessed by OpMode thread w/o synchronization
-            private volatile EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition position = EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition.FOUR;
+            private volatile ultimategoalwebcampipeline.SkystoneDeterminationPipeline.RingPosition position = EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition.FOUR;
 
             /*
              * This function takes the RGB frame, converts to YCrCb,
@@ -156,13 +154,13 @@ public class Auto_Red_Build_Wall_16633_State extends LinearOpMode {
                         BLUE, // The color the rectangle is drawn in
                         2); // Thickness of the rectangle lines
 
-                position = EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition.FOUR; // Record our analysis
+                position = ultimategoalwebcampipeline.SkystoneDeterminationPipeline.RingPosition.FOUR; // Record our analysis
                 if (avg1 > FOUR_RING_THRESHOLD) {
-                    position = EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition.FOUR;
+                    position = ultimategoalwebcampipeline.SkystoneDeterminationPipeline.RingPosition.FOUR;
                 } else if (avg1 > ONE_RING_THRESHOLD) {
-                    position = EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition.ONE;
+                    position = ultimategoalwebcampipeline.SkystoneDeterminationPipeline.RingPosition.ONE;
                 } else {
-                    position = EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition.NONE;
+                    position = ultimategoalwebcampipeline.SkystoneDeterminationPipeline.RingPosition.NONE;
                 }
 
                 Imgproc.rectangle(
@@ -186,16 +184,16 @@ public class Auto_Red_Build_Wall_16633_State extends LinearOpMode {
         //robot.strafeInches(0.8, 12, 5);  // Speed, inches, timeout seconds
 
         // Demonstration of OpenCV position; take out telemetry for function of what your robot will do
-            if (position == EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition.FOUR) {
-                telemetry.addData("Target Zone", 'C');
-                telemetry.update();
-            } else if (position == EasyOpenCVExample.SkystoneDeterminationPipeline.RingPosition.ONE) {
-                telemetry.addData("Target Zone", 'B');
-                telemetry.update();
-            } else {
-                telemetry.addData("Target Zone", 'A');
-                telemetry.update();
-            }
+        if (position == ultimategoalwebcampipeline.SkystoneDeterminationPipeline.RingPosition.FOUR) {
+            telemetry.addData("Target Zone", 'C');
+            telemetry.update();
+        } else if (position == ultimategoalwebcampipeline.SkystoneDeterminationPipeline.RingPosition.ONE) {
+            telemetry.addData("Target Zone", 'B');
+            telemetry.update();
+        } else {
+            telemetry.addData("Target Zone", 'A');
+            telemetry.update();
+        }
 
         // Random sample mecanum code
         /*
@@ -215,7 +213,6 @@ public class Auto_Red_Build_Wall_16633_State extends LinearOpMode {
         delay(1);
         robot.strafeInches(0.8, -20, 1);
         forward(45);
-
         // Autonomous Finished
         telemetry.addData("Path", "Complete");
         telemetry.update();

@@ -27,7 +27,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo Channel: foundationL:       "foundationL" servo2 Rev2
  */
 
-public class Base {
+public class base {
     /* Public Motors and Servos */
     public DcMotor leftFront   = null;
     public DcMotor rightFront  = null;
@@ -63,7 +63,7 @@ public class Base {
     private ElapsedTime period = new ElapsedTime();
 
     // Constructor - leave this blank for now
-    public Base () {
+    public MaristBaseRobot2019_Quad_14101 () {
 
     }
 

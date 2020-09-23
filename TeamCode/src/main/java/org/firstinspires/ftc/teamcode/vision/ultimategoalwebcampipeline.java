@@ -24,6 +24,7 @@ package org.firstinspires.ftc.teamcode.vision;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -31,45 +32,65 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvWebcam;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.openftc.easyopencv.OpenCvPipeline;
+import org.openftc.easyopencv.OpenCvWebcam;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import java.util.Locale;
 
 @TeleOp
-public class EasyOpenCVExample extends LinearOpMode
+public class ultimategoalwebcampipeline extends LinearOpMode
 {
+    /*  If you are using a Rev Extension Hub with a robot controller phone, uncomment the below code.
+     *  Currently set up for rear camera (see javadocs for other configurations:  https://javadoc.io/doc/org.openftc/easyopencv/latest/index.html)
+     */
+    /*
     OpenCvInternalCamera phoneCam;
+    SkystoneDeterminationPipeline pipeline;
+    */
+
+    /*  If you are using a control hub with an external webcam, uncomment the below code */
+    private OpenCvCamera webcam;
     SkystoneDeterminationPipeline pipeline;
 
     @Override
     public void runOpMode()
     {
-        /*  If you are using a Rev Extension Hub with a robot controller phone, keep the below code.
+        /*  If you are using a Rev Extension Hub with a robot controller phone, uncomment the below code.
+         *  In addition to uncommenting you must replace all instances in code of "webcam" with "phoneCam"
          *  Currently set up for rear camera (see javadocs for other configurations:  https://javadoc.io/doc/org.openftc/easyopencv/latest/index.html)
          */
+        /*
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         pipeline = new SkystoneDeterminationPipeline();
         phoneCam.setPipeline(pipeline);
+        */
 
-        /*  If you are using a control hub with an external webcam, keep the below code */
-
-                    // TODO
+        /*  If you are using a control hub with an external webcam, do not comment the below code */
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        // OpenCVWebcam instantiation not fully debugged
+        webcam = new OpenCvWebcam(hardwareMap.get(WebcamName.class, "Webcam"), cameraMonitorViewId);
+        pipeline = new SkystoneDeterminationPipeline();
+        webcam.setPipeline(pipeline);
 
 
 
         // We set the viewport policy to optimized view so the preview doesn't appear 90 deg
         // out when the RC activity is in portrait. We do our actual image processing assuming
         // landscape orientation, though.
-        phoneCam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
+        webcam.setViewportRenderingPolicy(OpenCvCamera.ViewportRenderingPolicy.OPTIMIZE_VIEW);
 
-        phoneCam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                phoneCam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                // Edit @width and @height to fit your camera's resolution
+                webcam.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
             }
         });
 
@@ -132,7 +153,7 @@ public class EasyOpenCVExample extends LinearOpMode
         int avg1;
 
         // Volatile since accessed by OpMode thread w/o synchronization
-        private volatile RingPosition position = RingPosition.FOUR;
+        public volatile RingPosition position = RingPosition.FOUR;
 
         /*
          * This function takes the RGB frame, converts to YCrCb,
