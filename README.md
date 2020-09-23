@@ -5,7 +5,7 @@
 This is the official repository for CobaltCV the new computer vision library for FTC! Inspired by past vision libraries including [DogeCV](https://github.com/dogecv/DogeCV)
 and [EasyOpenCV](https://github.com/OpenFTC/EasyOpenCV), this is a field-ready computer vision library with game support starting at Ultimate Goal 2020-2021. Designed for beginner
 programmers and on, there is finally no intense java expierience required to use computer vision on your robot! We take the sweat out of
-vision with sample autonomous programs and premade pipelines along with compatibility for using a phone camera, control hub, and external
+vision with sample vision programs and premade pipelines along with compatibility for using a phone camera, control hub, and external
 webcams! Written based off of [EasyOpenCV](https://github.com/OpenFTC/EasyOpenCV), code is highly functional and established off of a reliable source. To get started, follow the steps below.
 
 ## Getting Started
