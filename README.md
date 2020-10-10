@@ -1,6 +1,7 @@
 # CobaltCV
 ![CobaltCV](https://github.com/AlessioToniolo/FTC-EOCV-Ultimate-Goal/blob/master/circlecobaltimage.png)
 
+[![Alessio Toniolo's DEV Profile](https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg)](https://dev.to/alessiotoniolo)
 ## Welcome
 This is the official repository for CobaltCV the new computer vision library for FTC! Inspired by past vision libraries including [DogeCV](https://github.com/dogecv/DogeCV)
 and [EasyOpenCV](https://github.com/OpenFTC/EasyOpenCV), this is a field-ready computer vision library with game support starting at Ultimate Goal 2020-2021. Designed for beginner
