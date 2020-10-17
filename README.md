@@ -23,7 +23,7 @@ To get started with using **CobaltCV**, you have two options:
 * You are finished!
 
 ### Adding OpenCV to your robot controller
-In order to use OpenCV, you must download this file and add it to your robot controller files, whether that would be a control hub or robot phone.
+In order to use OpenCV, you must download this file and add it to your robot controller files underneath the usb folder, whether that would be a control hub or robot phone.
 **https://github.com/AlessioToniolo/FTC-EOCV-Ultimate-Goal/blob/master/libOpenCvNative.so**
 
 ## Help
