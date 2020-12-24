@@ -96,11 +96,11 @@ public class ultimategoalwebcampipeline extends LinearOpMode
             telemetry.update();
 
             /* TODO create active webcam telemetry */
-            /*
+            
             telemetry.addData("Analysis", pipeline.getAnalysis());
             telemetry.addData("Position", pipeline.position);
             telemetry.update();
-            */
+            
 
             // Don't burn CPU cycles busy-looping in this sample
             sleep(50);
