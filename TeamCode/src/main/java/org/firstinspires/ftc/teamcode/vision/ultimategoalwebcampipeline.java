@@ -58,12 +58,12 @@ public class ultimategoalwebcampipeline extends LinearOpMode
          *  In addition to uncommenting you must replace all instances in code of "webcam" with "phoneCam"
          *  Currently set up for rear camera (see javadocs for other configurations:  https://javadoc.io/doc/org.openftc/easyopencv/latest/index.html)
          */
-        /*
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        
+        //int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        //phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         pipeline = new SkystoneDeterminationPipeline();
-        phoneCam.setPipeline(pipeline);
-        */
+        //phoneCam.setPipeline(pipeline);
+        
 
         /*  If you are using a control hub with an external webcam, do not comment the below code */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
