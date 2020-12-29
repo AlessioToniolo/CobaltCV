@@ -33,4 +33,4 @@ For more in depth documentation and configurations, visit these two links:
 
 ## Contribution
 If you would like to contribute to **CobaltCV**, join our discord server!
-- https://discord.gg/gM767S
+- https://discord.gg/g8H9zNWQPd
